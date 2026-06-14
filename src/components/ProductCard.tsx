@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { motion } from 'motion/react';
-import { Plus, Minus, MessageSquare, ShoppingCart, Check, Heart, Percent } from 'lucide-react';
+import { motion, AnimatePresence } from 'motion/react';
+import { Plus, Minus, MessageSquare, ShoppingCart, Check, Heart, Percent, ChefHat, Flame, ShieldAlert, X } from 'lucide-react';
 import { Product, CartItem } from '../types';
 
 interface ProductCardProps {
@@ -24,6 +24,7 @@ export default function ProductCard({
   const [isNoteModalOpen, setIsNoteModalOpen] = useState(false);
   const [itemNote, setItemNote] = useState('');
   const [successAnimation, setSuccessAnimation] = useState(false);
+  const [isDetailsModalOpen, setIsDetailsModalOpen] = useState(false);
 
   const handleAddSimple = (e: React.MouseEvent) => {
     e.stopPropagation();
@@ -140,6 +141,19 @@ export default function ProductCard({
           <p className="text-xs text-natural-muted leading-relaxed mt-1.5 line-clamp-3">
             {product.description}
           </p>
+          <button
+            onClick={(e) => {
+              e.stopPropagation();
+              e.preventDefault();
+              setIsDetailsModalOpen(true);
+            }}
+            className="text-xs text-natural-primary hover:text-natural-secondary font-bold inline-flex items-center gap-1 mt-2.5 transition active:scale-95 cursor-pointer hover:underline underline-offset-2 bg-transparent border-0 p-0"
+            title="Ver detalhes do prato"
+            id={`btn-view-details-${product.id}`}
+            type="button"
+          >
+            Ver detalhes →
+          </button>
         </div>
 
         {/* Selected custom notes indicator */}
@@ -288,6 +302,200 @@ export default function ProductCard({
           </motion.div>
         </div>
       )}
+
+      {/* Details Modal */}
+      <AnimatePresence>
+        {isDetailsModalOpen && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+            <div 
+              className="absolute inset-0 bg-stone-950/60 backdrop-blur-sm" 
+              onClick={() => setIsDetailsModalOpen(false)} 
+            />
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95, y: 15 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.95, y: 15 }}
+              transition={{ duration: 0.2 }}
+              className="bg-natural-surface rounded-3xl w-full max-w-lg overflow-hidden relative z-10 shadow-2xl border border-natural-border flex flex-col max-h-[90vh]"
+              id={`details-modal-${product.id}`}
+            >
+              {/* Header: Cover photo & overlayed close button */}
+              <div className="relative aspect-16/9 w-full bg-[#E0D8CF] shrink-0 border-b border-natural-border">
+                <img
+                  src={product.image}
+                  alt={product.name}
+                  className="w-full h-full object-cover"
+                  referrerPolicy="no-referrer"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-stone-950/80 via-transparent to-transparent" />
+                
+                {/* Floating tags inside the details modal header */}
+                <div className="absolute bottom-4 left-4 flex flex-wrap gap-1.5 items-center">
+                  {product.promo && (
+                    <span className="text-[10px] uppercase tracking-wider px-2.5 py-0.5 rounded-full shadow-xs bg-rose-500 text-white font-extrabold flex items-center gap-1 border border-rose-400/20">
+                      <Percent className="h-2.5 w-2.5" />
+                      Em Oferta
+                    </span>
+                  )}
+                  {product.tags && product.tags.map((tag) => (
+                    <span
+                      key={tag}
+                      className="text-[10px] uppercase tracking-wider px-2.5 py-0.5 rounded-full shadow-xs bg-white text-natural-primary font-extrabold border border-natural-border"
+                    >
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+
+                {/* Close Button */}
+                <button
+                  type="button"
+                  onClick={() => setIsDetailsModalOpen(false)}
+                  className="absolute top-4 right-4 p-2 bg-stone-900/85 hover:bg-stone-900 text-white rounded-full transition shadow-md hover:scale-105 active:scale-95 border border-stone-850 cursor-pointer flex items-center justify-center"
+                  title="Fechar modal"
+                  id={`btn-close-details-modal-${product.id}`}
+                >
+                  <X className="h-4 w-4" />
+                </button>
+              </div>
+
+              {/* Scrollable content container */}
+              <div className="p-6 overflow-y-auto space-y-5 flex-1 scrollbar-thin">
+                <div>
+                  <div className="flex items-start justify-between gap-4">
+                    <h2 className="font-serif font-black text-natural-primary text-xl md:text-2xl leading-tight">
+                      {product.name}
+                    </h2>
+                    <span className="font-display font-black text-xl text-[#A67C52] shrink-0">
+                      R$ {product.price.toFixed(2).replace('.', ',')}
+                    </span>
+                  </div>
+                  <p className="text-xs text-natural-muted leading-relaxed mt-2.5">
+                    {product.description}
+                  </p>
+                </div>
+
+                {/* Ingredients section */}
+                {product.ingredients && product.ingredients.length > 0 && (
+                  <div className="border-t border-natural-border pt-4">
+                    <h4 className="text-xs font-bold text-natural-primary uppercase tracking-wider flex items-center gap-1.5 mb-2.5">
+                      <ChefHat className="h-4 w-4 text-natural-secondary" />
+                      <span>Ingredientes selecionados</span>
+                    </h4>
+                    <div className="flex flex-wrap gap-1.5">
+                      {product.ingredients.map((ingredient, idx) => (
+                        <span
+                          key={idx}
+                          className="text-xs px-3 py-1 bg-natural-surface-alt border border-natural-border text-natural-text rounded-xl font-medium"
+                        >
+                          {ingredient}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                {/* Nutritional Info section */}
+                {product.nutritionalInfo && (
+                  <div className="border-t border-natural-border pt-4">
+                    <h4 className="text-xs font-bold text-natural-primary uppercase tracking-wider flex items-center gap-1.5 mb-2.5">
+                      <Flame className="h-4 w-4 text-natural-secondary" />
+                      <span>Informações Nutricionais (Estimado)</span>
+                    </h4>
+                    <div className="grid grid-cols-4 gap-2 bg-natural-surface-alt/40 border border-natural-border p-3 rounded-2xl">
+                      <div className="text-center p-1">
+                        <span className="block text-[8px] md:text-[9px] uppercase font-bold text-natural-muted">Calorias</span>
+                        <span className="font-display font-extrabold text-natural-primary text-xs mt-0.5 block">
+                          {product.nutritionalInfo.calories || '-'}
+                        </span>
+                      </div>
+                      <div className="text-center border-l border-natural-border p-1">
+                        <span className="block text-[8px] md:text-[9px] uppercase font-bold text-natural-muted">Proteínas</span>
+                        <span className="font-display font-extrabold text-natural-primary text-xs mt-0.5 block">
+                          {product.nutritionalInfo.protein || '-'}
+                        </span>
+                      </div>
+                      <div className="text-center border-l border-natural-border p-1">
+                        <span className="block text-[8px] md:text-[9px] uppercase font-bold text-natural-muted">Carbos</span>
+                        <span className="font-display font-extrabold text-natural-primary text-xs mt-0.5 block">
+                          {product.nutritionalInfo.carbs || '-'}
+                        </span>
+                      </div>
+                      <div className="text-center border-l border-natural-border p-1">
+                        <span className="block text-[8px] md:text-[9px] uppercase font-bold text-natural-muted">Gorduras</span>
+                        <span className="font-display font-extrabold text-natural-primary text-xs mt-0.5 block">
+                          {product.nutritionalInfo.fat || '-'}
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                )}
+
+                {/* Allergens warning section */}
+                {product.nutritionalInfo?.allergens && product.nutritionalInfo.allergens.length > 0 && (
+                  <div className="bg-amber-500/10 border border-amber-500/20 p-3.5 rounded-2xl flex items-start gap-2.5">
+                    <ShieldAlert className="h-4 w-4 text-amber-600 shrink-0 mt-0.5" />
+                    <div>
+                      <span className="block text-xs font-extrabold text-amber-800 uppercase tracking-wide">Atenção a Alergênicos</span>
+                      <p className="text-[11px] text-amber-700/90 mt-0.5 leading-relaxed font-semibold">
+                        Contém: {product.nutritionalInfo.allergens.join(', ')}.
+                      </p>
+                    </div>
+                  </div>
+                )}
+              </div>
+
+              {/* Sticky/Fixed footer controls of the modal */}
+              <div className="p-4 border-t border-natural-border bg-natural-surface-alt/30 flex items-center justify-between gap-3 shrink-0">
+                <button
+                  type="button"
+                  onClick={() => setIsDetailsModalOpen(false)}
+                  className="px-4 py-2.5 border border-natural-border text-natural-primary bg-natural-surface rounded-xl hover:bg-natural-surface-alt transition text-xs font-bold"
+                >
+                  Fechar
+                </button>
+                
+                {cartItem ? (
+                  <div className="flex items-center gap-1.5 bg-natural-surface border border-natural-border rounded-xl p-1 shadow-2xs">
+                    <button
+                      type="button"
+                      onClick={handleDecrement}
+                      className="p-1.5 hover:bg-natural-surface-alt rounded-lg transition text-natural-muted hover:text-red-500"
+                      title="Diminuir quantidade"
+                    >
+                      <Minus className="h-3 w-3" />
+                    </button>
+                    <span className="w-6 text-center font-display font-bold text-natural-text text-xs">
+                      {cartItem.quantity}
+                    </span>
+                    <button
+                      type="button"
+                      onClick={handleIncrement}
+                      className="p-1.5 hover:bg-natural-surface-alt rounded-lg transition text-natural-muted hover:text-emerald-600"
+                      title="Aumentar quantidade"
+                    >
+                      <Plus className="h-3 w-3" />
+                    </button>
+                  </div>
+                ) : (
+                  <button
+                    type="button"
+                    onClick={(e) => {
+                      handleAddSimple(e);
+                      setIsDetailsModalOpen(false);
+                    }}
+                    className="flex items-center gap-2 bg-natural-primary hover:bg-natural-primary/95 text-white font-bold text-xs py-2.5 px-4 rounded-xl shadow-xs transition duration-300 select-none cursor-pointer border border-natural-primary"
+                    id={`btn-details-modal-add-${product.id}`}
+                  >
+                    <ShoppingCart className="h-3.5 w-3.5" />
+                    <span>Adicionar ao Carrinho</span>
+                  </button>
+                )}
+              </div>
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }

@@ -8,6 +8,14 @@ export interface Product {
   available: boolean;
   tags?: string[];
   promo?: boolean;
+  ingredients?: string[];
+  nutritionalInfo?: {
+    calories?: string;
+    protein?: string;
+    carbs?: string;
+    fat?: string;
+    allergens?: string[];
+  };
 }
 
 export interface CartItem {

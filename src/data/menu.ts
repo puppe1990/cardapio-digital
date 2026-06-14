@@ -32,7 +32,15 @@ export const PRODUCTS: Product[] = [
     image: "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=600&auto=format&fit=crop&q=80",
     available: true,
     tags: ["Mais Vendido", "Smash"],
-    promo: true
+    promo: true,
+    ingredients: ["120g blend bovino blend Angus", "Queijo cheddar fatiado", "Pão brioche selado", "Picles de pepino artesanal", "Maionese secreta da casa", "Manteiga de garrafa"],
+    nutritionalInfo: {
+      calories: "580 kcal",
+      protein: "32g",
+      carbs: "38g",
+      fat: "34g",
+      allergens: ["Glúten", "Lactose", "Ovos"]
+    }
   },
   {
     id: "burger-bacon",
@@ -42,7 +50,15 @@ export const PRODUCTS: Product[] = [
     category: "burgers",
     image: "https://images.unsplash.com/photo-1553979459-d2229ba7433b?w=600&auto=format&fit=crop&q=80",
     available: true,
-    tags: ["Destaque"]
+    tags: ["Destaque"],
+    ingredients: ["Duplo blend bovino Angus (200g)", "Bacon artesanal defumado", "Double cheddar fatia", "Onion rings crocantes", "Molho barbecue rústico", "Pão australiano amanteigado"],
+    nutritionalInfo: {
+      calories: "840 kcal",
+      protein: "48g",
+      carbs: "42g",
+      fat: "52g",
+      allergens: ["Glúten", "Lactose"]
+    }
   },
   {
     id: "burger-chicken",
@@ -52,7 +68,15 @@ export const PRODUCTS: Product[] = [
     category: "burgers",
     image: "https://images.unsplash.com/photo-1625813506062-0aeb1d7a094b?w=600&auto=format&fit=crop&q=80",
     available: true,
-    tags: ["Novidade"]
+    tags: ["Novidade"],
+    ingredients: ["140g Peito de Frango Crocante", "Empanamento em farinha Panko", "Molho artesanal de Gorgonzola", "Alface americana selecionada", "Tomates confitados", "Maionese verde artesanal", "Pão brioche"],
+    nutritionalInfo: {
+      calories: "620 kcal",
+      protein: "35g",
+      carbs: "45g",
+      fat: "26g",
+      allergens: ["Glúten", "Lactose", "Ovos"]
+    }
   },
   {
     id: "burger-vegan",
@@ -62,9 +86,16 @@ export const PRODUCTS: Product[] = [
     category: "burgers",
     image: "https://images.unsplash.com/photo-1585238342024-78d387f4a707?w=600&auto=format&fit=crop&q=80",
     available: true,
-    tags: ["Vegano"]
+    tags: ["Vegano"],
+    ingredients: ["Hambúrguer de grão de bico (120g)", "Ervas finas frescas", "Queijo fermentado de castanha", "Rúcula baby hidropônica", "Tomate seco drenado", "Maionese vegana à base de soja", "Pão brioche vegano"],
+    nutritionalInfo: {
+      calories: "450 kcal",
+      protein: "18g",
+      carbs: "52g",
+      fat: "16g",
+      allergens: ["Glúten", "Oleaginosas"]
+    }
   },
-
   // Pizzas
   {
     id: "pizza-margherita",
@@ -74,7 +105,15 @@ export const PRODUCTS: Product[] = [
     category: "pizzas",
     image: "https://images.unsplash.com/photo-1604382354936-07c5d9983bd3?w=600&auto=format&fit=crop&q=80",
     available: true,
-    tags: ["Clássica"]
+    tags: ["Clássica"],
+    ingredients: ["Massa de longa fermentação (48h)", "Molho de tomate pelado San Marzano", "Muçarela de búfala fiordilatte", "Tomatinhos cereja adocicados", "Basílico fresco fresco", "Azeite extravirgem de oliva"],
+    nutritionalInfo: {
+      calories: "720 kcal (broto)",
+      protein: "28g",
+      carbs: "84g",
+      fat: "24g",
+      allergens: ["Glúten", "Lactose"]
+    }
   },
   {
     id: "pizza-calabresa",
@@ -85,7 +124,15 @@ export const PRODUCTS: Product[] = [
     image: "https://images.unsplash.com/photo-1513104890138-7c749659a591?w=600&auto=format&fit=crop&q=80",
     available: true,
     tags: ["Top 1"],
-    promo: true
+    promo: true,
+    ingredients: ["Massa de fermentação natural", "Molho rústico de tomate da casa", "Muçarela ralada premium", "Linguiça calabresa artesanal curada", "Cebola roxa lamelada", "Folhas de rúcula fresca", "Azeitonas pretas chilenas"],
+    nutritionalInfo: {
+      calories: "810 kcal (broto)",
+      protein: "34g",
+      carbs: "88g",
+      fat: "32g",
+      allergens: ["Glúten", "Lactose"]
+    }
   },
   {
     id: "pizza-formaggi",
@@ -95,9 +142,16 @@ export const PRODUCTS: Product[] = [
     category: "pizzas",
     image: "https://images.unsplash.com/photo-1574071318508-1cdbab80d002?w=600&auto=format&fit=crop&q=80",
     available: true,
-    tags: ["Artesanal"]
+    tags: ["Artesanal"],
+    ingredients: ["Massa de fermentação lenta", "Molho de tomate temperado", "Queijo muçarela", "Queijo gorgonzola dolce", "Provolone defumado ralado", "Catupiry original", "Mel silvestre de flor de laranjeira"],
+    nutritionalInfo: {
+      calories: "890 kcal (broto)",
+      protein: "38g",
+      carbs: "92g",
+      fat: "41g",
+      allergens: ["Glúten", "Lactose"]
+    }
   },
-
   // Porções
   {
     id: "portion-fries",
@@ -107,7 +161,15 @@ export const PRODUCTS: Product[] = [
     category: "portions",
     image: "https://images.unsplash.com/photo-1573080496219-bb080dd4f877?w=600&auto=format&fit=crop&q=80",
     available: true,
-    tags: ["Para Compartilhar"]
+    tags: ["Para Compartilhar"],
+    ingredients: ["Batata selecionada Asterix com casca", "Páprica defumada espanhola", "Alecrim fresco desfolhado", "Molho cremoso de cheddar premium", "Bacon frito ultra-crocante em cubos"],
+    nutritionalInfo: {
+      calories: "390 kcal",
+      protein: "8g",
+      carbs: "48g",
+      fat: "18g",
+      allergens: ["Lactose"]
+    }
   },
   {
     id: "portion-rings",
@@ -116,7 +178,15 @@ export const PRODUCTS: Product[] = [
     price: 19.90,
     category: "portions",
     image: "https://images.unsplash.com/photo-1639024471283-2bc7b3c6a267?w=600&auto=format&fit=crop&q=80",
-    available: true
+    available: true,
+    ingredients: ["Cebolas espanholas doces gigantes", "Farinha panko de trigo", "Tempero especial seco do Chef", "Maionese cremosa artesanal", "Molho verde de chimichurri fresco"],
+    nutritionalInfo: {
+      calories: "290 kcal",
+      protein: "4g",
+      carbs: "35g",
+      fat: "14g",
+      allergens: ["Glúten", "Ovos"]
+    }
   },
   {
     id: "portion-chicken-bites",
@@ -126,9 +196,16 @@ export const PRODUCTS: Product[] = [
     category: "portions",
     image: "https://images.unsplash.com/photo-1569058242253-92a9c755a0ec?w=600&auto=format&fit=crop&q=80",
     available: true,
-    tags: ["Favorito"]
+    tags: ["Favorito"],
+    ingredients: ["Sobrecoxa de frango premium desossada", "Marinado de ervas e cítricos", "Mix secreto de farinhas", "Barbecue artesanal com goiabada cascão", "Especiarias e sal refinado"],
+    nutritionalInfo: {
+      calories: "480 kcal",
+      protein: "29g",
+      carbs: "22g",
+      fat: "19g",
+      allergens: ["Glúten"]
+    }
   },
-
   // Bebidas
   {
     id: "drink-soda",
@@ -137,7 +214,15 @@ export const PRODUCTS: Product[] = [
     price: 6.50,
     category: "drinks",
     image: "https://images.unsplash.com/photo-1622483767028-3f66f32aef97?w=600&auto=format&fit=crop&q=80",
-    available: true
+    available: true,
+    ingredients: ["Água gaseificada", "Extrato de noz de cola", "Edulcorantes artificiais", "Acidulante INS 338", "Corante Caramelo IV"],
+    nutritionalInfo: {
+      calories: "0 kcal",
+      protein: "0g",
+      carbs: "0g",
+      fat: "0g",
+      allergens: []
+    }
   },
   {
     id: "drink-juice",
@@ -146,7 +231,15 @@ export const PRODUCTS: Product[] = [
     price: 9.90,
     category: "drinks",
     image: "https://images.unsplash.com/photo-1621506289937-a8e4df240d0b?w=600&auto=format&fit=crop&q=80",
-    available: true
+    available: true,
+    ingredients: ["Laranjas paulistas frescas espremidas na hora (100% integral)"],
+    nutritionalInfo: {
+      calories: "165 kcal",
+      protein: "2g",
+      carbs: "38g",
+      fat: "0g",
+      allergens: []
+    }
   },
   {
     id: "drink-beer-artisan",
@@ -156,9 +249,16 @@ export const PRODUCTS: Product[] = [
     category: "drinks",
     image: "https://images.unsplash.com/photo-1608270586620-248524c67de9?w=600&auto=format&fit=crop&q=80",
     available: true,
-    tags: ["Álcool"]
+    tags: ["Álcool"],
+    ingredients: ["Água mineral de fonte", "Malte de cevada importado", "Lúpulo americano Cascade & Citra", "Levedura de alta fermentação Ale"],
+    nutritionalInfo: {
+      calories: "210 kcal",
+      protein: "2g",
+      carbs: "14g",
+      fat: "0g",
+      allergens: ["Glúten"]
+    }
   },
-
   // Sobremesas
   {
     id: "dessert-gateau",
@@ -169,7 +269,15 @@ export const PRODUCTS: Product[] = [
     image: "https://images.unsplash.com/photo-1606313564200-e75d5e30476c?w=600&auto=format&fit=crop&q=80",
     available: true,
     tags: ["Queridinho"],
-    promo: true
+    promo: true,
+    ingredients: ["Chocolate belga amargo 70%", "Manteiga sem sal", "Açúcar cristal refinado", "Ovos frescos orgânicos", "Cacau puro polvilhado", "Sorvete artesanal de fava de baunilha"],
+    nutritionalInfo: {
+      calories: "490 kcal",
+      protein: "6g",
+      carbs: "58g",
+      fat: "22g",
+      allergens: ["Glúten", "Lactose", "Ovos"]
+    }
   },
   {
     id: "dessert-cheesecake",
@@ -178,6 +286,15 @@ export const PRODUCTS: Product[] = [
     price: 19.90,
     category: "desserts",
     image: "https://images.unsplash.com/photo-1524351199679-46cddf530c04?w=600&auto=format&fit=crop&q=80",
-    available: true
+    available: true,
+    ingredients: ["Base de biscoito maizena amanteigado", "Cream cheese philadelphia original", "Suco de limão siciliano", "Geleia fresca de framboesas", "Amoras silvestres pretas", "Morangos frescos fatiados"],
+    nutritionalInfo: {
+      calories: "380 kcal",
+      protein: "5g",
+      carbs: "42g",
+      fat: "19g",
+      allergens: ["Glúten", "Lactose"]
+    }
   }
 ];
+
