@@ -5,12 +5,13 @@ import { Product, CartItem } from '../types';
 
 interface ProductCardProps {
   key?: string | number;
-  product: Product;
+  product?: Product;
   cartItem?: CartItem;
-  onAddToCart: (product: Product, quantity: number, notes?: string) => void;
-  onRemoveFromCart: (productId: string) => void;
-  isFavorite: boolean;
-  onToggleFavorite: (productId: string) => void;
+  onAddToCart?: (product: Product, quantity: number, notes?: string) => void;
+  onRemoveFromCart?: (productId: string) => void;
+  isFavorite?: boolean;
+  onToggleFavorite?: (productId: string) => void;
+  isLoading?: boolean;
 }
 
 export default function ProductCard({
@@ -18,9 +19,50 @@ export default function ProductCard({
   cartItem,
   onAddToCart,
   onRemoveFromCart,
-  isFavorite,
+  isFavorite = false,
   onToggleFavorite,
+  isLoading = false,
 }: ProductCardProps) {
+  if (isLoading) {
+    return (
+      <div className="bg-natural-surface rounded-3xl overflow-hidden border border-natural-border shadow-xs flex flex-col h-full animate-pulse select-none">
+        {/* Skeleton Image area */}
+        <div className="relative aspect-4/3 w-full bg-stone-300/30 dark:bg-stone-800/40" />
+        
+        {/* Skeleton content */}
+        <div className="p-5 flex-1 flex flex-col justify-between space-y-4">
+          <div className="space-y-2.5">
+            {/* Title line */}
+            <div className="h-4.5 bg-stone-300 dark:bg-stone-700 rounded-lg w-2/3" />
+            {/* Description lines */}
+            <div className="space-y-2 pt-1.5">
+              <div className="h-3 bg-stone-200/80 dark:bg-stone-800/80 rounded-md w-full" />
+              <div className="h-3 bg-stone-200/80 dark:bg-stone-800/80 rounded-md w-11/12" />
+              <div className="h-3 bg-stone-200/80 dark:bg-stone-800/80 rounded-md w-5/6" />
+            </div>
+            {/* Link details */}
+            <div className="h-3 bg-stone-200/50 dark:bg-stone-800/50 rounded-md w-1/4 mt-2.5" />
+          </div>
+
+          {/* Controls line */}
+          <div className="pt-3 border-t border-natural-border flex items-center justify-between">
+            <div className="space-y-1">
+              <div className="h-2.5 bg-stone-200/60 dark:bg-stone-800/60 rounded-xs w-8" />
+              <div className="h-4 bg-stone-300 dark:bg-stone-700 rounded-md w-16" />
+            </div>
+            <div className="flex gap-1.5 items-center">
+              <div className="h-8 w-8 bg-stone-200/70 dark:bg-stone-800/70 rounded-xl" />
+              <div className="h-8 w-24 bg-stone-300 dark:bg-stone-700 rounded-xl" />
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  if (!product || !onAddToCart || !onRemoveFromCart || !onToggleFavorite) {
+    return null;
+  }
   const [isNoteModalOpen, setIsNoteModalOpen] = useState(false);
   const [itemNote, setItemNote] = useState('');
   const [successAnimation, setSuccessAnimation] = useState(false);

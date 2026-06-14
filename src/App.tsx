@@ -20,6 +20,7 @@ export default function App() {
   const [favorites, setFavorites] = useState<string[]>([]);
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
   const [searchQuery, setSearchQuery] = useState<string>('');
+  const [isLoadingMenu, setIsLoadingMenu] = useState<boolean>(true);
   const [isCartOpen, setIsCartOpen] = useState<boolean>(false);
   const [isToastOpen, setIsToastOpen] = useState<boolean>(false);
   const [toastMessage, setToastMessage] = useState<string>('');
@@ -184,6 +185,15 @@ export default function App() {
     showToast("🧹 Carrinho esvaziado com sucesso.");
   };
 
+  // Simulate active menu processing/filtering delay for loading skeletons
+  useEffect(() => {
+    setIsLoadingMenu(true);
+    const delay = setTimeout(() => {
+      setIsLoadingMenu(false);
+    }, 450);
+    return () => clearTimeout(delay);
+  }, [selectedCategory, searchQuery]);
+
   // 3. Filter and search matching logic
   const filteredProducts = PRODUCTS.filter((p) => {
     const matchesCategory = 
@@ -227,8 +237,14 @@ export default function App() {
             </div>
           </div>
 
-          {/* Grid list or empty message */}
-          {filteredProducts.length === 0 ? (
+          {/* Grid list, skeleton loader, or empty message */}
+          {isLoadingMenu ? (
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+              {Array.from({ length: 6 }).map((_, idx) => (
+                <ProductCard key={`skeleton-${idx}`} isLoading={true} />
+              ))}
+            </div>
+          ) : filteredProducts.length === 0 ? (
             <div className="text-center py-20 bg-natural-surface rounded-3xl border border-natural-border p-8 max-w-md mx-auto mt-8">
               {selectedCategory === 'favorites' && !searchQuery ? (
                 <>
