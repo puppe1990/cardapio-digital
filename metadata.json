@@ -1,0 +1,6 @@
+{
+  "name": "Cardápio Digital",
+  "description": "Um cardápio digital moderno e interativo em que clientes podem escolher produtos, montar o carrinho e enviar seus pedidos diretamente para o WhatsApp do restaurante.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

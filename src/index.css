@@ -1,0 +1,61 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Outfit:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Plus Jakarta Sans", "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Outfit", sans-serif;
+  --font-serif: "Playfair Display", Georgia, Cambria, "Times New Roman", Times, serif;
+  
+  --color-natural-bg: var(--natural-bg);
+  --color-natural-text: var(--natural-text);
+  --color-natural-primary: var(--natural-primary);
+  --color-natural-secondary: var(--natural-secondary);
+  --color-natural-border: var(--natural-border);
+  --color-natural-muted: var(--natural-muted);
+  --color-natural-surface: var(--natural-surface);
+  --color-natural-surface-alt: var(--natural-surface-alt);
+}
+
+:root {
+  --natural-bg: #F7F3EE;
+  --natural-text: #3D3A35;
+  --natural-primary: #5A5A40;
+  --natural-secondary: #A67C52;
+  --natural-border: #E8E1D9;
+  --natural-muted: #8C8479;
+  --natural-surface: #FFFFFF;
+  --natural-surface-alt: #F7F3EE;
+}
+
+.dark {
+  --natural-bg: #110F0D;
+  --natural-text: #E6DFD5;
+  --natural-primary: #A2A281;
+  --natural-secondary: #CFA67C;
+  --natural-border: #2B2723;
+  --natural-muted: #9E9487;
+  --natural-surface: #1B1916;
+  --natural-surface-alt: #23201D;
+}
+
+body {
+  font-family: var(--font-sans);
+  background-color: var(--color-natural-bg);
+  color: var(--color-natural-text);
+}
+
+/* Base custom interactive scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-natural-border);
+  border-radius: 9999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-natural-muted);
+}
