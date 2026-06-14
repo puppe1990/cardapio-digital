@@ -31,7 +31,8 @@ export const PRODUCTS: Product[] = [
     category: "burgers",
     image: "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=600&auto=format&fit=crop&q=80",
     available: true,
-    tags: ["Mais Vendido", "Smash"]
+    tags: ["Mais Vendido", "Smash"],
+    promo: true
   },
   {
     id: "burger-bacon",
@@ -83,7 +84,8 @@ export const PRODUCTS: Product[] = [
     category: "pizzas",
     image: "https://images.unsplash.com/photo-1513104890138-7c749659a591?w=600&auto=format&fit=crop&q=80",
     available: true,
-    tags: ["Top 1"]
+    tags: ["Top 1"],
+    promo: true
   },
   {
     id: "pizza-formaggi",
@@ -166,7 +168,8 @@ export const PRODUCTS: Product[] = [
     category: "desserts",
     image: "https://images.unsplash.com/photo-1606313564200-e75d5e30476c?w=600&auto=format&fit=crop&q=80",
     available: true,
-    tags: ["Queridinho"]
+    tags: ["Queridinho"],
+    promo: true
   },
   {
     id: "dessert-cheesecake",

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { 
   ShoppingBag, X, Plus, Minus, Trash2, MapPin, 
-  Store, MessageSquare, CreditCard, Coins, Check, AlertCircle 
+  Store, MessageSquare, CreditCard, Coins, Check, AlertCircle, Info 
 } from 'lucide-react';
 import { CartItem, OrderDetails, OrderType, PaymentMethod, RestaurantConfig } from '../types';
 
@@ -39,6 +39,7 @@ export default function Cart({
   });
 
   const [formErrors, setFormErrors] = useState<string[]>([]);
+  const [showTooltip, setShowTooltip] = useState(false);
 
   // Subtotal calculations
   const subtotal = cartItems.reduce((acc, item) => acc + (item.product.price * item.quantity), 0);
@@ -554,16 +555,61 @@ export default function Cart({
                   )}
 
                   {/* Complete Order Checkout button */}
-                  <button
-                    onClick={handleCheckout}
-                    className="w-full py-4 bg-[#25D366] hover:bg-[#20ba59] text-white rounded-xl font-bold text-sm shadow-md hover:shadow-lg transition-all transform active:scale-98 flex items-center justify-center gap-2 select-none"
-                    id="btn-submit-order-whatsapp"
-                  >
-                    <svg className="h-5 w-5 fill-current shrink-0" viewBox="0 0 24 24">
-                      <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946C.06 5.348 5.397.01 12.008.01c3.202.001 6.212 1.246 8.477 3.513 2.262 2.268 3.507 5.28 3.505 8.484-.004 6.657-5.34 11.997-11.953 11.997-2.005-.001-3.973-.503-5.734-1.46L0 24zm6.59-4.846c1.6.95 3.188 1.449 4.825 1.451 5.436 0 9.86-4.37 9.864-9.799.002-2.63-1.023-5.101-2.885-6.963C16.588 2.015 14.117.99 11.5.99c-5.44 0-9.863 4.373-9.867 9.803-.001 1.765.485 3.49 1.408 5.013l-1.015 3.706 3.822-.988zm13.71-8.156c-.29-.145-1.716-.835-1.982-.932-.266-.096-.46-.145-.654.145-.193.291-.748.932-.917 1.127-.17.194-.339.218-.629.073-.29-.146-1.226-.445-2.333-1.423-.862-.758-1.443-1.693-1.611-1.983-.17-.29-.018-.447.127-.591.13-.13.29-.339.435-.508.145-.17.193-.29.29-.484.096-.194.048-.363-.024-.508-.073-.145-.654-1.55-.896-2.13-.235-.568-.475-.491-.654-.5h-.557c-.193 0-.508.072-.774.362-.266.29-1.016.98-1.016 2.392 0 1.41 1.04 2.774 1.185 2.968.145.193 2.046 3.084 4.954 4.318.692.293 1.233.468 1.655.601.696.219 1.33.187 1.83.113.557-.082 1.716-.69 1.958-1.356.242-.665.242-1.234.17-1.355-.072-.12-.266-.193-.556-.339z" />
-                    </svg>
-                    <span>Enviar Pedido por WhatsApp</span>
-                  </button>
+                  <div className="relative">
+                    <button
+                      onClick={handleCheckout}
+                      className="w-full py-4 bg-[#25D366] hover:bg-[#20ba59] text-white rounded-xl font-bold text-sm shadow-md hover:shadow-lg transition-all transform active:scale-98 flex items-center justify-center gap-2 select-none"
+                      id="btn-submit-order-whatsapp"
+                    >
+                      <svg className="h-5 w-5 fill-current shrink-0" viewBox="0 0 24 24">
+                        <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946C.06 5.348 5.397.01 12.008.01c3.202.001 6.212 1.246 8.477 3.513 2.262 2.268 3.507 5.28 3.505 8.484-.004 6.657-5.34 11.997-11.953 11.997-2.005-.001-3.973-.503-5.734-1.46L0 24zm6.59-4.846c1.6.95 3.188 1.449 4.825 1.451 5.436 0 9.86-4.37 9.864-9.799.002-2.63-1.023-5.101-2.885-6.963C16.588 2.015 14.117.99 11.5.99c-5.44 0-9.863 4.373-9.867 9.803-.001 1.765.485 3.49 1.408 5.013l-1.015 3.706 3.822-.988zm13.71-8.156c-.29-.145-1.716-.835-1.982-.932-.266-.096-.46-.145-.654.145-.193.291-.748.932-.917 1.127-.17.194-.339.218-.629.073-.29-.146-1.226-.445-2.333-1.423-.862-.758-1.443-1.693-1.611-1.983-.17-.29-.018-.447.127-.591.13-.13.29-.339.435-.508.145-.17.193-.29.29-.484.096-.194.048-.363-.024-.508-.073-.145-.654-1.55-.896-2.13-.235-.568-.475-.491-.654-.5h-.557c-.193 0-.508.072-.774.362-.266.29-1.016.98-1.016 2.392 0 1.41 1.04 2.774 1.185 2.968.145.193 2.046 3.084 4.954 4.318.692.293 1.233.468 1.655.601.696.219 1.33.187 1.83.113.557-.082 1.716-.69 1.958-1.356.242-.665.242-1.234.17-1.355-.072-.12-.266-.193-.556-.339z" />
+                      </svg>
+                      <span>Enviar Pedido por WhatsApp</span>
+
+                      {/* Interactive Explanation Tooltip */}
+                      <div className="relative inline-flex items-center ml-1">
+                        <button
+                          type="button"
+                          onMouseEnter={() => setShowTooltip(true)}
+                          onMouseLeave={() => setShowTooltip(false)}
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            e.preventDefault();
+                            setShowTooltip(!showTooltip);
+                          }}
+                          className="p-1 rounded-full hover:bg-white/20 transition cursor-pointer text-white/95 hover:text-white flex items-center justify-center focus:outline-none"
+                          title="Dúvidas sobre o envio via WhatsApp?"
+                          id="btn-whatsapp-info-tooltip"
+                        >
+                          <Info className="h-4 w-4" />
+                        </button>
+
+                        <AnimatePresence>
+                          {showTooltip && (
+                            <motion.div
+                              initial={{ opacity: 0, y: 8, scale: 0.95 }}
+                              animate={{ opacity: 1, y: 0, scale: 1 }}
+                              exit={{ opacity: 0, y: 8, scale: 0.95 }}
+                              transition={{ duration: 0.15 }}
+                              className="absolute bottom-full mb-3 right-[-4px] sm:right-[-20px] w-64 bg-stone-900 border border-stone-800 p-3.5 rounded-2xl shadow-xl text-left pointer-events-auto z-50 text-white font-normal text-xs"
+                              id="info-whatsapp-popover"
+                            >
+                              <p className="text-xs font-bold text-emerald-400 flex items-center gap-1.5 mb-1.5">
+                                <svg className="h-4 w-4 fill-current shrink-0" viewBox="0 0 24 24">
+                                  <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946C.06 5.348 5.397.01 12.008.01c3.202.001 6.212 1.246 8.477 3.513 2.262 2.268 3.507 5.28 3.505 8.484-.004 6.657-5.34 11.997-11.953 11.997-2.005-.001-3.973-.503-5.734-1.46L0 24zm6.59-4.846c1.6.95 3.188 1.449 4.825 1.451 5.436 0 9.86-4.37 9.864-9.799.002-2.63-1.023-5.101-2.885-6.963C16.588 2.015 14.117.99 11.5.99c-5.44 0-9.863 4.373-9.867 9.803-.001 1.765.485 3.49 1.408 5.013l-1.015 3.706 3.822-.988zm13.71-8.156c-.29-.145-1.716-.835-1.982-.932-.266-.096-.46-.145-.654.145-.193.291-.748.932-.917 1.127-.17.194-.339.218-.629.073-.29-.146-1.226-.445-2.333-1.423-.862-.758-1.443-1.693-1.611-1.983-.17-.29-.018-.447.127-.591.13-.13.29-.339.435-.508.145-.17.193-.29.29-.484.096-.194.048-.363-.024-.508-.073-.145-.654-1.55-.896-2.13-.235-.568-.475-.491-.654-.5h-.557c-.193 0-.508.072-.774.362-.266.29-1.016.98-1.016 2.392 0 1.41 1.04 2.774 1.185 2.968.145.193 2.046 3.084 4.954 4.318.692.293 1.233.468 1.655.601.696.219 1.33.187 1.83.113.557-.082 1.716-.69 1.958-1.356.242-.665.242-1.234.17-1.355-.072-.12-.266-.193-.556-.339z" />
+                                </svg>
+                                Envio via WhatsApp
+                              </p>
+                              <p className="text-[11px] leading-relaxed text-stone-300 font-sans">
+                                O pedido será enviado como uma mensagem formatada com todos os itens, observações e dados diretamente ao WhatsApp do restaurante.
+                              </p>
+                              <div className="absolute top-full border-4 border-transparent border-t-stone-900 right-[12px] sm:right-[28px]" />
+                            </motion.div>
+                          )}
+                        </AnimatePresence>
+                      </div>
+                    </button>
+                  </div>
                   <p className="text-[10px] text-natural-muted text-center">
                     Ao enviar, o WhatsApp abrirá automaticamente com os itens, valores e dados do pedido prontos para envio.
                   </p>

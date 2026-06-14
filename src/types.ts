@@ -7,6 +7,7 @@ export interface Product {
   image: string;
   available: boolean;
   tags?: string[];
+  promo?: boolean;
 }
 
 export interface CartItem {

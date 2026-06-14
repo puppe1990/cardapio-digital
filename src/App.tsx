@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { ShoppingBag, Star, Info, MessageSquare, ShieldAlert, Heart } from 'lucide-react';
+import { ShoppingBag, Star, Info, MessageSquare, ShieldAlert, Heart, MapPin, Copy, Check } from 'lucide-react';
 import Header from './components/Header';
 import ProductCard from './components/ProductCard';
 import Cart from './components/Cart';
@@ -52,6 +52,21 @@ export default function App() {
       console.error(e);
     }
   }, [theme]);
+
+  const [copiedAddress, setCopiedAddress] = useState<boolean>(false);
+
+  const handleCopyAddress = () => {
+    try {
+      navigator.clipboard.writeText(restaurantConfig.address);
+      setCopiedAddress(true);
+      showToast('✓ Endereço copiado para a área de transferência!');
+      setTimeout(() => {
+        setCopiedAddress(false);
+      }, 2000);
+    } catch (err) {
+      console.error('Erro ao copiar endereço:', err);
+    }
+  };
 
   const handleToggleTheme = () => {
     setTheme((prev) => {
@@ -274,11 +289,38 @@ export default function App() {
         </main>
 
         {/* Dynamic Footer Information Banner */}
-        <footer className="bg-natural-surface-alt/40 border-t border-natural-border p-8 text-center text-xs text-natural-muted space-y-2 mt-12">
+        <footer className="bg-natural-surface-alt/40 border-t border-natural-border p-8 text-center text-xs text-natural-muted space-y-4 mt-12">
           <p className="font-serif font-bold text-natural-primary flex items-center justify-center gap-1">
             Feito com <Heart className="h-3.5 w-3.5 text-red-500 fill-current" /> por {restaurantConfig.name}
           </p>
-          <p className="leading-relaxed max-w-md mx-auto font-medium">
+          
+          <div className="flex flex-col items-center justify-center gap-2 max-w-md mx-auto pt-1">
+            <p className="text-[11px] text-natural-text font-medium flex items-center gap-1.5 justify-center">
+              <MapPin className="h-3.5 w-3.5 text-natural-primary shrink-0" />
+              <span>{restaurantConfig.address}</span>
+            </p>
+            <button
+              onClick={handleCopyAddress}
+              className="inline-flex items-center gap-1.5 px-3.5 py-1.5 bg-natural-surface border border-natural-border text-natural-primary rounded-xl text-[11px] font-bold hover:bg-natural-surface-alt/80 hover:text-natural-primary/95 transition shadow-2xs hover:shadow-xs active:scale-95 cursor-pointer"
+              title="Copiar Endereço do Restaurante"
+              id="btn-copy-restaurant-address"
+              type="button"
+            >
+              {copiedAddress ? (
+                <>
+                  <Check className="h-3 w-3 text-emerald-500" />
+                  <span className="text-emerald-600 font-extrabold">Endereço Copiado!</span>
+                </>
+              ) : (
+                <>
+                  <Copy className="h-3 w-3 text-natural-secondary" />
+                  <span>Copiar Endereço</span>
+                </>
+              )}
+            </button>
+          </div>
+
+          <p className="leading-relaxed max-w-md mx-auto font-medium text-[11px]">
             Este é um cardápio digital moderno com checkout direto no WhatsApp. Seus dados de preferência e sacola de compras são guardados de forma segura sob a sua privacidade no próprio navegador.
           </p>
         </footer>

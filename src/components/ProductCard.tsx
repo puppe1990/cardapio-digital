@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion } from 'motion/react';
-import { Plus, Minus, MessageSquare, ShoppingCart, Check, Heart } from 'lucide-react';
+import { Plus, Minus, MessageSquare, ShoppingCart, Check, Heart, Percent } from 'lucide-react';
 import { Product, CartItem } from '../types';
 
 interface ProductCardProps {
@@ -77,9 +77,18 @@ export default function ProductCard({
         <div className="absolute inset-0 bg-gradient-to-t from-stone-900/40 via-transparent to-transparent opacity-40" />
         
         {/* Floating tags */}
-        {product.tags && product.tags.length > 0 && (
-          <div className="absolute top-2.5 left-2.5 flex flex-wrap gap-1">
-            {product.tags.map((tag) => {
+        {((product.tags && product.tags.length > 0) || product.promo) && (
+          <div className="absolute top-2.5 left-2.5 flex flex-wrap gap-1 md:gap-1.5 items-center z-10">
+            {product.promo && (
+              <span
+                className="text-[9px] uppercase tracking-wider px-2.5 py-0.5 rounded-full shadow-xs bg-rose-500 text-white font-extrabold flex items-center gap-1 border border-rose-400/20 active:scale-95 animate-pulse"
+                title="Prato em Oferta de Desconto!"
+              >
+                <Percent className="h-2.5 w-2.5" />
+                Em Oferta
+              </span>
+            )}
+            {product.tags && product.tags.map((tag) => {
               let badgeColor = 'bg-white/95 text-natural-primary border border-natural-border';
               if (tag === 'Vegano') badgeColor = 'bg-[#D1DBC2] text-natural-primary font-bold';
               if (tag === 'Destaque' || tag === 'Mais Vendido') badgeColor = 'bg-[#EBD5C9] text-natural-secondary font-bold';
